@@ -34,3 +34,71 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+# MovieHunt - Application de Notation de Films
+
+MovieHunt est une application web qui vous permet de noter des films et de partager vos critiques. Elle se compose d'une partie publique qui affiche tous les films notés et d'une partie administration pour rechercher et noter des films.
+
+## Fonctionnalités
+
+### Partie Publique
+- Affichage de tous les films notés
+- Page de détail pour chaque film avec:
+  - Visuel du film
+  - Synopsis
+  - Note sur 10
+  - Bande-annonce (si disponible)
+  - "Remarkable Staff" (acteurs et équipe technique sélectionnés)
+
+### Partie Administration
+- Recherche de films via l'API TMDB
+- Attribution d'une note sur 10
+- Sélection du "Remarkable Staff" (acteurs, réalisateurs, scénaristes, etc.)
+- Publication automatique sur la partie publique
+
+## Configuration Technique
+
+### Prérequis
+- Node.js 18+ et npm
+- Compte Vercel (pour le déploiement)
+- Clé API TMDB (déjà configurée dans l'application)
+
+### Installation Locale
+
+```bash
+# Cloner le dépôt
+git clone https://github.com/benistad/moviehunt.git
+cd moviehunt
+
+# Installer les dépendances
+npm install
+
+# Lancer le serveur de développement
+npm run dev
+```
+
+## Déploiement sur Vercel
+
+1. Créez un compte sur [Vercel](https://vercel.com) si vous n'en avez pas déjà un
+2. Connectez votre compte GitHub à Vercel
+3. Importez ce projet depuis GitHub
+4. Vercel détectera automatiquement qu'il s'agit d'un projet Next.js et configurera les paramètres de build
+5. Cliquez sur "Deploy" pour déployer votre application
+
+Une fois déployée, votre application sera accessible à une URL du type `https://moviehunt-username.vercel.app`
+
+## Stockage des Données
+
+Pour le développement local, les données sont stockées en mémoire. Pour la production sur Vercel, vous pouvez utiliser Vercel KV pour un stockage persistant:
+
+1. Dans votre projet Vercel, allez dans "Storage"
+2. Créez une nouvelle instance KV
+3. Ajoutez les variables d'environnement générées à votre projet
+
+## Technologies Utilisées
+
+- Next.js 15.3.1
+- React
+- Tailwind CSS
+- API TMDB
+- Vercel pour l'hébergement et le stockage

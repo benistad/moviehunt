@@ -1,25 +1,35 @@
 import React from 'react';
+import Link from 'next/link';
 import { getAllRatedMovies } from '@/services/storage';
-import { RatedMovie } from '@/types/tmdb';
 import MovieCard from '@/components/MovieCard';
 import Navbar from '@/components/Navbar';
 
 export const revalidate = 0;
 
-export default async function Home() {
+export default async function AdminPage() {
   const movies = await getAllRatedMovies();
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       <Navbar />
       <main className="container mx-auto px-4 py-8">
-        <h1 className="mb-8 text-3xl font-bold">Films Notés</h1>
+        <div className="mb-8 flex items-center justify-between">
+          <h1 className="text-3xl font-bold">Administration</h1>
+          <Link
+            href="/admin/search"
+            className="rounded-md bg-yellow-500 px-4 py-2 font-medium text-gray-900 transition-colors hover:bg-yellow-400"
+          >
+            Ajouter un film
+          </Link>
+        </div>
+
+        <h2 className="mb-6 text-2xl font-semibold">Films notés</h2>
         
         {movies.length === 0 ? (
           <div className="rounded-lg bg-gray-800 p-8 text-center">
-            <h2 className="text-xl font-semibold">Aucun film noté pour le moment</h2>
+            <h3 className="text-xl font-semibold">Aucun film noté pour le moment</h3>
             <p className="mt-2 text-gray-400">
-              Connectez-vous à l'espace administration pour ajouter des films.
+              Utilisez le bouton "Ajouter un film" pour commencer à noter des films.
             </p>
           </div>
         ) : (
@@ -31,7 +41,7 @@ export default async function Home() {
                   ...movie,
                   userRating: movie.userRating,
                 }}
-                href={`/movie/${movie.id}`}
+                href={`/admin/edit/${movie.id}`}
               />
             ))}
           </div>
