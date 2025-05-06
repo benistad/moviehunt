@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-const Navbar: React.FC = () => {
+const Navbar = () => {
   const pathname = usePathname();
   const isAdmin = pathname?.startsWith('/admin');
 

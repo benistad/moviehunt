@@ -9,7 +9,7 @@ interface MovieCardProps {
   href: string;
 }
 
-const MovieCard: React.FC<MovieCardProps> = ({ movie, href }) => {
+const MovieCard = ({ movie, href }: MovieCardProps) => {
   return (
     <Link href={href} className="group">
       <div className="relative overflow-hidden rounded-lg shadow-md transition-all duration-300 hover:shadow-xl">

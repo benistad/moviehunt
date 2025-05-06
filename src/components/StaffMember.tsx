@@ -7,7 +7,7 @@ type StaffMemberProps = {
   member: (CastMember | CrewMember) & { type?: 'cast' | 'crew' };
 };
 
-const StaffMember: React.FC<StaffMemberProps> = ({ member }) => {
+const StaffMember = ({ member }: StaffMemberProps) => {
   const isCast = 'character' in member || member.type === 'cast';
   const role = isCast 
     ? (member as CastMember).character 
