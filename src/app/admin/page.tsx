@@ -1,13 +1,22 @@
-import React from 'react';
+'use client';
+
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { getAllRatedMovies } from '@/services/storage';
+import { RatedMovie } from '@/types/tmdb';
 import MovieCard from '@/components/MovieCard';
 import Navbar from '@/components/Navbar';
 
-export const revalidate = 0;
+export default function AdminPage() {
+  const [movies, setMovies] = useState<RatedMovie[]>([]);
+  const [loading, setLoading] = useState(true);
 
-export default async function AdminPage() {
-  const movies = await getAllRatedMovies();
+  useEffect(() => {
+    getAllRatedMovies()
+      .then((response) => setMovies(response || []))
+      .catch((error) => console.error('Error fetching movies:', error))
+      .finally(() => setLoading(false));
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
@@ -25,7 +34,11 @@ export default async function AdminPage() {
 
         <h2 className="mb-6 text-2xl font-semibold">Films notés</h2>
         
-        {movies.length === 0 ? (
+        {loading ? (
+          <div className="rounded-lg bg-gray-800 p-8 text-center">
+            <h3 className="text-xl font-semibold">Chargement...</h3>
+          </div>
+        ) : movies.length === 0 ? (
           <div className="rounded-lg bg-gray-800 p-8 text-center">
             <h3 className="text-xl font-semibold">Aucun film noté pour le moment</h3>
             <p className="mt-2 text-gray-400">

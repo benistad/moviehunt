@@ -1,29 +1,54 @@
-import React from 'react';
+'use client';
+
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { notFound } from 'next/navigation';
-import { getRatedMovie } from '@/services/storage';
+import { useParams } from 'next/navigation';
 import { getImageUrl, getTrailerKey } from '@/services/tmdb';
 import Navbar from '@/components/Navbar';
 import StaffMember from '@/components/StaffMember';
 import dynamic from 'next/dynamic';
+import { getAllRatedMovies } from '@/services/storage';
+import { RatedMovie } from '@/types/tmdb';
 
 // Dynamically import ReactPlayer to avoid SSR issues
 const ReactPlayer = dynamic(() => import('react-player/lazy'), { ssr: false });
 
-export const revalidate = 0;
+export default function MoviePage() {
+  const params = useParams();
+  const movieId = parseInt(params.id as string, 10);
+  const [movie, setMovie] = useState<RatedMovie | null>(null);
+  const [loading, setLoading] = useState(true);
 
-interface MoviePageProps {
-  params: {
-    id: string;
-  };
-}
+  useEffect(() => {
+    const fetchMovie = async () => {
+      try {
+        // Utiliser directement le service de stockage
+        const ratedMovie = await getAllRatedMovies().then(
+          movies => movies.find(m => m.id === movieId)
+        );
+        
+        if (ratedMovie) {
+          setMovie(ratedMovie);
+        } else {
+          setMovie(null);
+        }
+      } catch (error) {
+        console.error('Error fetching movie:', error);
+        setMovie(null);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-export default async function MoviePage({ params }: MoviePageProps) {
-  const movieId = parseInt(params.id, 10);
-  const movie = await getRatedMovie(movieId);
+    fetchMovie();
+  }, [movieId]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   if (!movie) {
-    notFound();
+    return <div>Movie not found</div>;
   }
 
   const trailerKey = getTrailerKey(movie.videos);

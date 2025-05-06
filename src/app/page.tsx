@@ -1,13 +1,21 @@
-import React from 'react';
+'use client';
+
+import React, { useState, useEffect } from 'react';
 import { getAllRatedMovies } from '@/services/storage';
 import { RatedMovie } from '@/types/tmdb';
 import MovieCard from '@/components/MovieCard';
 import Navbar from '@/components/Navbar';
 
-export const revalidate = 0;
+export default function Home() {
+  const [movies, setMovies] = useState<RatedMovie[]>([]);
+  const [loading, setLoading] = useState(true);
 
-export default async function Home() {
-  const movies = await getAllRatedMovies();
+  useEffect(() => {
+    getAllRatedMovies()
+      .then((response) => setMovies(response || []))
+      .catch((error) => console.error('Error fetching movies:', error))
+      .finally(() => setLoading(false));
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
@@ -15,7 +23,11 @@ export default async function Home() {
       <main className="container mx-auto px-4 py-8">
         <h1 className="mb-8 text-3xl font-bold">Films Notés</h1>
         
-        {movies.length === 0 ? (
+        {loading ? (
+          <div className="rounded-lg bg-gray-800 p-8 text-center">
+            <h2 className="text-xl font-semibold">Chargement...</h2>
+          </div>
+        ) : movies.length === 0 ? (
           <div className="rounded-lg bg-gray-800 p-8 text-center">
             <h2 className="text-xl font-semibold">Aucun film noté pour le moment</h2>
             <p className="mt-2 text-gray-400">

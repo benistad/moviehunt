@@ -1,22 +1,18 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import Image from 'next/image';
 import axios from 'axios';
 import { MovieDetails, CastMember, CrewMember } from '@/types/tmdb';
-import { getImageUrl } from '@/services/tmdb';
+import { getImageUrl, getMovieDetails } from '@/services/tmdb';
+import { getAllRatedMovies } from '@/services/storage';
 import Navbar from '@/components/Navbar';
 
-interface EditPageProps {
-  params: {
-    id: string;
-  };
-}
-
-export default function EditPage({ params }: EditPageProps) {
+export default function EditPage() {
   const router = useRouter();
-  const movieId = parseInt(params.id, 10);
+  const params = useParams();
+  const movieId = parseInt(params.id as string, 10);
   
   const [movie, setMovie] = useState<MovieDetails | null>(null);
   const [userRating, setUserRating] = useState<number>(5);
@@ -28,13 +24,18 @@ export default function EditPage({ params }: EditPageProps) {
   useEffect(() => {
     const fetchMovieDetails = async () => {
       try {
-        const response = await axios.get(`/api/movies/${movieId}`);
-        setMovie(response.data.movie);
+        // Get movie details from TMDB API
+        const movieDetails = await getMovieDetails(movieId);
+        setMovie(movieDetails);
+        
+        // Check if the movie has already been rated
+        const ratedMovies = await getAllRatedMovies();
+        const ratedMovie = ratedMovies.find((m) => m.id === movieId);
         
         // If the movie has already been rated, set the values
-        if (response.data.ratedMovie) {
-          setUserRating(response.data.ratedMovie.userRating);
-          setSelectedStaff(response.data.ratedMovie.remarkableStaff || []);
+        if (ratedMovie) {
+          setUserRating(ratedMovie.userRating);
+          setSelectedStaff(ratedMovie.remarkableStaff || []);
         }
       } catch (error) {
         console.error('Error fetching movie details:', error);
