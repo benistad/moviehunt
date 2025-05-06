@@ -6,12 +6,9 @@ import { useParams } from 'next/navigation';
 import { getImageUrl, getTrailerKey } from '@/services/tmdb';
 import Navbar from '@/components/Navbar';
 import StaffMember from '@/components/StaffMember';
-import dynamic from 'next/dynamic';
+import VideoPlayer from '@/components/VideoPlayer';
 import { getAllRatedMovies } from '@/services/storage';
 import { RatedMovie } from '@/types/tmdb';
-
-// Dynamically import ReactPlayer to avoid SSR issues
-const ReactPlayer = dynamic(() => import('react-player/lazy'), { ssr: false });
 
 export default function MoviePage() {
   const params = useParams();
@@ -143,11 +140,8 @@ export default function MoviePage() {
           <section className="mt-16">
             <h2 className="mb-6 text-2xl font-bold">Bande Annonce</h2>
             <div className="aspect-video w-full overflow-hidden rounded-lg">
-              <ReactPlayer
+              <VideoPlayer
                 url={`https://www.youtube.com/watch?v=${trailerKey}`}
-                width="100%"
-                height="100%"
-                controls
               />
             </div>
           </section>
