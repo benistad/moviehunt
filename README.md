@@ -92,19 +92,20 @@ Une fois déployée, votre application sera accessible à une URL du type `https
 L'application utilise un système de stockage hybride :
 
 - **En développement local** : Les données sont stockées en mémoire (elles sont perdues au redémarrage du serveur)
-- **En production sur Vercel** : Les données sont stockées de manière persistante avec Vercel KV (Redis)
+- **En production sur Vercel** : Les données sont stockées de manière persistante avec Vercel Redis
 
-### Configuration de Vercel KV
+### Configuration de Vercel Redis
 
-Pour configurer Vercel KV et bénéficier du stockage persistant :
+Pour configurer Vercel Redis et bénéficier du stockage persistant :
 
 1. Déployez d'abord votre application sur Vercel
 2. Dans votre projet Vercel, allez dans l'onglet "Storage"
-3. Cliquez sur "Create" et sélectionnez "KV Database"
-4. Suivez les instructions pour créer une nouvelle instance KV
-5. Une fois créée, Vercel vous fournira des variables d'environnement à ajouter à votre projet
-6. Allez dans l'onglet "Settings" > "Environment Variables" et ajoutez ces variables
-7. Redéployez votre application pour que les changements prennent effet
+3. Cliquez sur "Create" et sélectionnez "Redis Database"
+4. Nommez votre base de données (nous utilisons "moviehunt-redis")
+5. Suivez les instructions pour créer une nouvelle instance Redis
+6. Une fois créée, Vercel vous fournira des variables d'environnement à ajouter à votre projet
+7. Allez dans l'onglet "Settings" > "Environment Variables" et ajoutez ces variables
+8. Redéployez votre application pour que les changements prennent effet
 
 Les variables d'environnement nécessaires sont :
 
@@ -115,12 +116,13 @@ KV_REST_API_TOKEN=...
 KV_REST_API_READ_ONLY_TOKEN=...  
 ```
 
-L'application détectera automatiquement qu'elle s'exécute sur Vercel et utilisera Vercel KV pour le stockage persistant.
+L'application détectera automatiquement qu'elle s'exécute sur Vercel et utilisera Vercel Redis pour le stockage persistant. L'offre gratuite de Vercel Redis inclut 30 MB de stockage, ce qui est largement suffisant pour stocker environ 2000 films notés.
 
 ## Technologies Utilisées
 
 - Next.js 15.3.1
-- React
+- React 18.2.0
 - Tailwind CSS
 - API TMDB
-- Vercel pour l'hébergement et le stockage
+- Vercel Redis pour le stockage persistant
+- Vercel pour l'hébergement
