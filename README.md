@@ -103,20 +103,30 @@ Pour configurer Vercel Redis et bénéficier du stockage persistant :
 3. Cliquez sur "Create" et sélectionnez "Redis Database"
 4. Nommez votre base de données (nous utilisons "moviehunt-redis")
 5. Suivez les instructions pour créer une nouvelle instance Redis
-6. Une fois créée, Vercel vous fournira des variables d'environnement à ajouter à votre projet
-7. Allez dans l'onglet "Settings" > "Environment Variables" et ajoutez ces variables
-8. Redéployez votre application pour que les changements prennent effet
+6. Une fois créée, Vercel configurera automatiquement les variables d'environnement nécessaires
 
-Les variables d'environnement nécessaires sont :
+### Utilisation de Redis en développement local
 
-```
-KV_URL=...  
-KV_REST_API_URL=...  
-KV_REST_API_TOKEN=...  
-KV_REST_API_READ_ONLY_TOKEN=...  
-```
+Pour utiliser Redis en développement local :
 
-L'application détectera automatiquement qu'elle s'exécute sur Vercel et utilisera Vercel Redis pour le stockage persistant. L'offre gratuite de Vercel Redis inclut 30 MB de stockage, ce qui est largement suffisant pour stocker environ 2000 films notés.
+1. Installez la CLI Vercel si ce n'est pas déjà fait :
+   ```bash
+   npm i -g vercel
+   ```
+
+2. Liez votre projet local à votre projet Vercel :
+   ```bash
+   vercel link
+   ```
+
+3. Tirez les variables d'environnement :
+   ```bash
+   vercel env pull .env.development.local
+   ```
+
+4. Redémarrez votre serveur de développement
+
+L'application détectera automatiquement les variables d'environnement Redis et utilisera le stockage persistant au lieu du stockage en mémoire. L'offre gratuite de Vercel Redis inclut 30 MB de stockage, ce qui est largement suffisant pour stocker environ 2000 films notés.
 
 ## Technologies Utilisées
 

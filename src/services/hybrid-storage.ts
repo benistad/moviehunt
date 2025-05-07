@@ -1,16 +1,17 @@
 import { RatedMovie } from '@/types/tmdb';
 import * as MemoryStorage from './storage';
-import * as KVStorage from './kv-storage';
+import * as RedisStorage from './redis-storage';
 
 // Détermine si nous sommes en environnement de production sur Vercel
-const isVercelProduction = process.env.VERCEL === '1';
+// ou si nous avons des variables d'environnement Redis locales
+const hasRedisConfig = !!(process.env.REDIS_URL || process.env.KV_URL);
 
 /**
  * Récupère tous les films notés
  */
 export const getAllRatedMovies = async (): Promise<RatedMovie[]> => {
-  if (isVercelProduction) {
-    return KVStorage.getAllRatedMovies();
+  if (hasRedisConfig) {
+    return RedisStorage.getAllRatedMovies();
   } else {
     return MemoryStorage.getAllRatedMovies();
   }
@@ -20,8 +21,8 @@ export const getAllRatedMovies = async (): Promise<RatedMovie[]> => {
  * Récupère un film noté par son ID
  */
 export const getRatedMovie = async (id: number): Promise<RatedMovie | null> => {
-  if (isVercelProduction) {
-    return KVStorage.getRatedMovie(id);
+  if (hasRedisConfig) {
+    return RedisStorage.getRatedMovie(id);
   } else {
     return MemoryStorage.getRatedMovie(id);
   }
@@ -31,8 +32,8 @@ export const getRatedMovie = async (id: number): Promise<RatedMovie | null> => {
  * Ajoute ou met à jour un film noté
  */
 export const addOrUpdateRatedMovie = async (movie: RatedMovie): Promise<RatedMovie> => {
-  if (isVercelProduction) {
-    return KVStorage.addOrUpdateRatedMovie(movie);
+  if (hasRedisConfig) {
+    return RedisStorage.addOrUpdateRatedMovie(movie);
   } else {
     return MemoryStorage.addOrUpdateRatedMovie(movie);
   }
@@ -42,8 +43,8 @@ export const addOrUpdateRatedMovie = async (movie: RatedMovie): Promise<RatedMov
  * Supprime un film noté
  */
 export const deleteRatedMovie = async (id: number): Promise<boolean> => {
-  if (isVercelProduction) {
-    return KVStorage.deleteRatedMovie(id);
+  if (hasRedisConfig) {
+    return RedisStorage.deleteRatedMovie(id);
   } else {
     return MemoryStorage.deleteRatedMovie(id);
   }
