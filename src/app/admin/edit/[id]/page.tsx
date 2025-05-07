@@ -7,7 +7,7 @@ import axios from 'axios';
 import { MovieDetails, CastMember, CrewMember } from '@/types/tmdb';
 import { getImageUrl, getMovieDetails } from '@/services/tmdb';
 import { getAllRatedMovies } from '@/services/storage';
-import Navbar from '@/components/Navbar';
+import ClientNavbar from '@/components/ClientNavbar';
 
 export default function EditPage() {
   const router = useRouter();
@@ -94,7 +94,7 @@ export default function EditPage() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-900 text-white">
-        <Navbar />
+        <ClientNavbar />
         <main className="container mx-auto flex items-center justify-center px-4 py-16">
           <div className="text-center">
             <div className="mb-4 h-12 w-12 animate-spin rounded-full border-4 border-yellow-500 border-t-transparent"></div>
@@ -108,7 +108,7 @@ export default function EditPage() {
   if (!movie) {
     return (
       <div className="min-h-screen bg-gray-900 text-white">
-        <Navbar />
+        <ClientNavbar />
         <main className="container mx-auto px-4 py-8">
           <div className="rounded-lg bg-red-900/30 p-6 text-center">
             <h2 className="text-xl font-semibold">Film non trouvé</h2>
@@ -129,7 +129,7 @@ export default function EditPage() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
-      <Navbar />
+      <ClientNavbar />
       <main className="container mx-auto px-4 py-8">
         <h1 className="mb-8 text-3xl font-bold">Noter un film</h1>
 

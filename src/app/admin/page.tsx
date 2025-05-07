@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { getAllRatedMovies } from '@/services/storage';
 import { RatedMovie } from '@/types/tmdb';
 import MovieCard from '@/components/MovieCard';
-import Navbar from '@/components/Navbar';
+import ClientNavbar from '@/components/ClientNavbar';
 
 export default function AdminPage() {
   const [movies, setMovies] = useState<RatedMovie[]>([]);
@@ -20,7 +20,7 @@ export default function AdminPage() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
-      <Navbar />
+      <ClientNavbar />
       <main className="container mx-auto px-4 py-8">
         <div className="mb-8 flex items-center justify-between">
           <h1 className="text-3xl font-bold">Administration</h1>

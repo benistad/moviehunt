@@ -1,58 +1,34 @@
-'use client';
-
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Image from 'next/image';
-import { useParams } from 'next/navigation';
+import { notFound } from 'next/navigation';
+import { getRatedMovie } from '@/services/storage';
 import { getImageUrl, getTrailerKey } from '@/services/tmdb';
-import Navbar from '@/components/Navbar';
+import ClientNavbar from '@/components/ClientNavbar';
 import StaffMember from '@/components/StaffMember';
-import VideoPlayer from '@/components/VideoPlayer';
-import { getAllRatedMovies } from '@/services/storage';
+import TrailerSection from '@/components/TrailerSection';
 import { RatedMovie } from '@/types/tmdb';
 
-export default function MoviePage() {
-  const params = useParams();
-  const movieId = parseInt(params.id as string, 10);
-  const [movie, setMovie] = useState<RatedMovie | null>(null);
-  const [loading, setLoading] = useState(true);
+export const dynamic = 'force-dynamic';
 
-  useEffect(() => {
-    const fetchMovie = async () => {
-      try {
-        // Utiliser directement le service de stockage
-        const ratedMovie = await getAllRatedMovies().then(
-          movies => movies.find(m => m.id === movieId)
-        );
-        
-        if (ratedMovie) {
-          setMovie(ratedMovie);
-        } else {
-          setMovie(null);
-        }
-      } catch (error) {
-        console.error('Error fetching movie:', error);
-        setMovie(null);
-      } finally {
-        setLoading(false);
-      }
-    };
+interface MoviePageProps {
+  params: {
+    id: string;
+  };
+}
 
-    fetchMovie();
-  }, [movieId]);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+export default async function MoviePage({ params }: MoviePageProps) {
+  const movieId = parseInt(params.id, 10);
+  const movie = await getRatedMovie(movieId);
 
   if (!movie) {
-    return <div>Movie not found</div>;
+    notFound();
   }
 
   const trailerKey = getTrailerKey(movie.videos);
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
-      <Navbar />
+      <ClientNavbar />
 
       <div className="relative h-[50vh] w-full">
         <Image
@@ -137,14 +113,7 @@ export default function MoviePage() {
         )}
 
         {trailerKey && (
-          <section className="mt-16">
-            <h2 className="mb-6 text-2xl font-bold">Bande Annonce</h2>
-            <div className="aspect-video w-full overflow-hidden rounded-lg">
-              <VideoPlayer
-                url={`https://www.youtube.com/watch?v=${trailerKey}`}
-              />
-            </div>
-          </section>
+          <TrailerSection trailerKey={trailerKey} />
         )}
       </main>
     </div>

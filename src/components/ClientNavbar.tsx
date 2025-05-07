@@ -1,9 +1,10 @@
 'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-const Navbar = () => {
+const ClientNavbar = () => {
   const pathname = usePathname();
   const isAdmin = pathname?.startsWith('/admin');
 
@@ -36,4 +37,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default ClientNavbar;

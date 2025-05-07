@@ -6,7 +6,7 @@ import Image from 'next/image';
 import axios from 'axios';
 import { Movie } from '@/types/tmdb';
 import { getImageUrl } from '@/services/tmdb';
-import Navbar from '@/components/Navbar';
+import ClientNavbar from '@/components/ClientNavbar';
 
 export default function SearchPage() {
   const router = useRouter();
@@ -37,7 +37,7 @@ export default function SearchPage() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
-      <Navbar />
+      <ClientNavbar />
       <main className="container mx-auto px-4 py-8">
         <h1 className="mb-8 text-3xl font-bold">Rechercher un film</h1>
 
