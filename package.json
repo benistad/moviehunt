@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",
-    "@upstash/redis": "^1.34.9",
     "@vercel/kv": "^3.0.0",
     "axios": "^1.6.2",
     "bcryptjs": "^2.4.3",
@@ -18,8 +17,7 @@
     "next-auth": "^4.24.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-player": "^2.13.0",
-    "redis": "^5.0.1"
+    "react-player": "^2.13.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",

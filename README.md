@@ -105,28 +105,13 @@ Pour configurer Vercel Redis et bénéficier du stockage persistant :
 5. Suivez les instructions pour créer une nouvelle instance Redis
 6. Une fois créée, Vercel configurera automatiquement les variables d'environnement nécessaires
 
-### Utilisation de Redis en développement local
+### Stockage en développement local
 
-Pour utiliser Redis en développement local :
+Pour le développement local, l'application utilise un stockage en mémoire, ce qui signifie que les données sont perdues lors du redémarrage du serveur. Cette approche simplifie le développement et les tests sans nécessiter de configuration supplémentaire.
 
-1. Installez la CLI Vercel si ce n'est pas déjà fait :
-   ```bash
-   npm i -g vercel
-   ```
+En production sur Vercel, l'application utilise automatiquement Vercel KV pour un stockage persistant.
 
-2. Liez votre projet local à votre projet Vercel :
-   ```bash
-   vercel link
-   ```
-
-3. Tirez les variables d'environnement :
-   ```bash
-   vercel env pull .env.development.local
-   ```
-
-4. Redémarrez votre serveur de développement
-
-L'application détectera automatiquement les variables d'environnement Redis et utilisera le stockage persistant au lieu du stockage en mémoire. L'offre gratuite de Vercel Redis inclut 30 MB de stockage, ce qui est largement suffisant pour stocker environ 2000 films notés.
+L'offre gratuite de Vercel Redis inclut 30 MB de stockage, ce qui est largement suffisant pour stocker environ 2000 films notés.
 
 ## Technologies Utilisées
 
