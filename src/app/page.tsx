@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { getAllRatedMovies } from '@/services/storage';
+import { getAllRatedMovies } from '@/services/hybrid-storage';
 import { RatedMovie } from '@/types/tmdb';
 import MovieCard from '@/components/MovieCard';
 import ClientNavbar from '@/components/ClientNavbar';

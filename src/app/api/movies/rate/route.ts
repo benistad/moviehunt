@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { MovieDetails, RatedMovie } from '@/types/tmdb';
-import { addOrUpdateRatedMovie } from '@/services/storage';
+import { addOrUpdateRatedMovie } from '@/services/hybrid-storage';
 
 export async function POST(request: NextRequest) {
   try {

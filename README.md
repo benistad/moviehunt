@@ -89,11 +89,33 @@ Une fois déployée, votre application sera accessible à une URL du type `https
 
 ## Stockage des Données
 
-Pour le développement local, les données sont stockées en mémoire. Pour la production sur Vercel, vous pouvez utiliser Vercel KV pour un stockage persistant:
+L'application utilise un système de stockage hybride :
 
-1. Dans votre projet Vercel, allez dans "Storage"
-2. Créez une nouvelle instance KV
-3. Ajoutez les variables d'environnement générées à votre projet
+- **En développement local** : Les données sont stockées en mémoire (elles sont perdues au redémarrage du serveur)
+- **En production sur Vercel** : Les données sont stockées de manière persistante avec Vercel KV (Redis)
+
+### Configuration de Vercel KV
+
+Pour configurer Vercel KV et bénéficier du stockage persistant :
+
+1. Déployez d'abord votre application sur Vercel
+2. Dans votre projet Vercel, allez dans l'onglet "Storage"
+3. Cliquez sur "Create" et sélectionnez "KV Database"
+4. Suivez les instructions pour créer une nouvelle instance KV
+5. Une fois créée, Vercel vous fournira des variables d'environnement à ajouter à votre projet
+6. Allez dans l'onglet "Settings" > "Environment Variables" et ajoutez ces variables
+7. Redéployez votre application pour que les changements prennent effet
+
+Les variables d'environnement nécessaires sont :
+
+```
+KV_URL=...  
+KV_REST_API_URL=...  
+KV_REST_API_TOKEN=...  
+KV_REST_API_READ_ONLY_TOKEN=...  
+```
+
+L'application détectera automatiquement qu'elle s'exécute sur Vercel et utilisera Vercel KV pour le stockage persistant.
 
 ## Technologies Utilisées
 

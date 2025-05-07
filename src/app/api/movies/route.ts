@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getAllRatedMovies } from '@/services/storage';
+import { getAllRatedMovies } from '@/services/hybrid-storage';
 
 export async function GET() {
   try {

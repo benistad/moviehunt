@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { getRatedMovie } from '@/services/storage';
+import { getRatedMovie } from '@/services/hybrid-storage';
 import { getImageUrl, getTrailerKey } from '@/services/tmdb';
 import ClientNavbar from '@/components/ClientNavbar';
 import StaffMember from '@/components/StaffMember';

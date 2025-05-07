@@ -5,7 +5,7 @@ import { useRouter, useParams } from 'next/navigation';
 import Image from 'next/image';
 import { MovieDetails, CastMember, CrewMember, RatedMovie } from '@/types/tmdb';
 import { getImageUrl, getMovieDetails } from '@/services/tmdb';
-import { getAllRatedMovies, addOrUpdateRatedMovie } from '@/services/storage';
+import { getAllRatedMovies, addOrUpdateRatedMovie } from '@/services/hybrid-storage';
 import ClientNavbar from '@/components/ClientNavbar';
 
 export default function EditPage() {
