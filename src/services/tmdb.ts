@@ -47,7 +47,7 @@ export const getMovieDetails = async (movieId: number): Promise<MovieDetails | n
 };
 
 export const getImageUrl = (path: string | null, size: string = 'w500'): string => {
-  if (!path) return '/placeholder-image.jpg';
+  if (!path) return 'https://via.placeholder.com/500x750?text=No+Image';
   return `https://image.tmdb.org/t/p/${size}${path}`;
 };
 

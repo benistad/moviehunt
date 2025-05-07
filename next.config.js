@@ -8,8 +8,10 @@ const nextConfig = {
     // Désactiver les vérifications TypeScript pendant la compilation
     ignoreBuildErrors: true,
   },
-  // Désactiver l'export statique pour permettre le déploiement sur Vercel
-  output: 'standalone',
+  // Configuration des images
+  images: {
+    domains: ['image.tmdb.org', 'via.placeholder.com'],
+  },
   // Optimisations pour Vercel
   swcMinify: true,
 };

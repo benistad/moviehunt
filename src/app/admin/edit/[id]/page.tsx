@@ -3,10 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Image from 'next/image';
-import axios from 'axios';
-import { MovieDetails, CastMember, CrewMember } from '@/types/tmdb';
+import { MovieDetails, CastMember, CrewMember, RatedMovie } from '@/types/tmdb';
 import { getImageUrl, getMovieDetails } from '@/services/tmdb';
-import { getAllRatedMovies } from '@/services/storage';
+import { getAllRatedMovies, addOrUpdateRatedMovie } from '@/services/storage';
 import ClientNavbar from '@/components/ClientNavbar';
 
 export default function EditPage() {
@@ -52,11 +51,18 @@ export default function EditPage() {
     
     setIsSaving(true);
     try {
-      await axios.post('/api/movies/rate', {
-        movie,
+      // Créer un objet RatedMovie
+      const ratedMovie: RatedMovie = {
+        ...movie,
         userRating,
         remarkableStaff: selectedStaff,
-      });
+        createdAt: new Date().toISOString(),
+      };
+      
+      // Sauvegarder directement via le service de stockage
+      await addOrUpdateRatedMovie(ratedMovie);
+      
+      // Rediriger vers la page d'administration
       router.push('/admin');
     } catch (error) {
       console.error('Error saving movie rating:', error);
